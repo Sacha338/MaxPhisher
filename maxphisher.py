@@ -130,7 +130,7 @@ bcyan="\033[1;36m"
 white="\033[0;37m"
 nc="\033[00m"
 
-version="1.1"
+version="1.2.2"
 
 # Regular Snippets
 ask  =     f"{green}[{white}?{green}] {yellow}"
@@ -1186,6 +1186,9 @@ def requirements():
     if isfile(f"{sites_dir}/version.txt"):
         with open(f"{sites_dir}/version.txt", "r") as sites_file:
             zipver=sites_file.read().strip()
+            version = version.strip()
+            zipver = zipver.strip()
+
             if float(version) > float(zipver):
                 # download(websites_url, "maxsites.zip")
                 print(f"\n{info2}Downloading website files....{nc}")
@@ -1229,7 +1232,7 @@ def main_menu():
     shell("stty -echoctl") # Skip printing ^C
     if update:
         updater()
-    requirements()
+        requirements()
     if troubleshoot in ts_commands:
         command = ts_commands[troubleshoot]
         shell(command)
@@ -1503,8 +1506,10 @@ def waiter():
         pexit()
 
 if __name__ == '__main__':
+    ret = main_menu()
     try:
-        main_menu()
+        strmain_menu = float(ret)
+#        return strmain_menu
     except KeyboardInterrupt:
         pexit()
     except Exception as e:
